@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const MicroHeader = () => {
+  const navigate = useNavigate();
+
   return (
     <MicroHeaderStyles>
       <NeobyteLogoStyles
@@ -10,8 +13,20 @@ const MicroHeader = () => {
         alt='neobyte_logo'
       />
       <TextStyles>
-        <Link to='/'>HOME</Link>
-        <Link to='/'>Project Details</Link>
+        <h6
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          HOME
+        </h6>
+        <h6
+          onClick={() => {
+            navigate('/test');
+          }}
+        >
+          Project Details
+        </h6>
       </TextStyles>
     </MicroHeaderStyles>
   );
@@ -33,11 +48,11 @@ const TextStyles = styled.div`
   justify-content: space-evenly;
   align-items: center;
   padding: 0 24vw;
-  a {
+  h6 {
     text-decoration: none;
     text-transform: uppercase;
     color: #fff;
-    font-size: 1rem;
+    cursor: pointer;
   }
 `;
 
