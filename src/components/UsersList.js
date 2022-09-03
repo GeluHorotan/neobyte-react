@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import User from './User';
 
 const UsersList = () => {
   const [data, setData] = useState();
@@ -46,7 +47,7 @@ const UsersList = () => {
       <UsersListStyles>
         {dataCopy &&
           filterUsers(dataCopy).map((user, index) => {
-            return <div key={index}>{user.name}</div>;
+            return <User mapKey={index}>{user.name}</User>;
           })}
       </UsersListStyles>
     </WrapperStyles>
@@ -70,6 +71,7 @@ const UsersListStyles = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  padding: 2rem;
 `;
 
 export default UsersList;
