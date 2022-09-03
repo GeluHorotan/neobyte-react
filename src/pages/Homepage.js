@@ -31,26 +31,28 @@ const Homepage = () => {
 
   return (
     <HomepageStyles>
-      <HeaderStyles>
-        <img
-          src='https://www.neobytesolutions.com/wp-content/uploads/2022/04/logo_Neobyte_solutions-Bold.webp'
-          alt=''
-        />{' '}
-      </HeaderStyles>
       <input
         style={{ marginTop: '10rem' }}
         type='text'
         onChange={searchHandler}
       />
 
-      {dataCopy &&
+      <h1>NEOBYTE</h1>
+      <h2>NEOBYTE</h2>
+      <h3>NEOBYTE</h3>
+      <h4>NEOBYTE</h4>
+      <h5>NEOBYTE</h5>
+      <h6>NEOBYTE</h6>
+      <p>NEOBYTE</p>
+
+      {/* {dataCopy &&
         dataCopy
           .filter((user) =>
             user.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .map((user, index) => {
             return <div key={index}>{user.name}</div>;
-          })}
+          })} */}
     </HomepageStyles>
   );
 };
@@ -59,21 +61,7 @@ const HomepageStyles = styled.div`
   width: 100%;
   background: url('https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//blog/bg_repeater.jpg');
   padding: 0 14vw;
-`;
-
-const HeaderStyles = styled.section`
-  width: 100%;
-
-  background: darkred;
-  padding: 1rem;
-  img {
-    width: 10%;
-    transition: all 200ms ease-in-out;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
+  color: #fff;
 `;
 
 export default Homepage;
