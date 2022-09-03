@@ -39,11 +39,17 @@ const UsersList = () => {
   };
   return (
     <WrapperStyles>
-      <input
-        style={{ marginTop: '10rem' }}
-        type='text'
-        onChange={searchHandler}
-      />
+      <div className='form'>
+        <input
+          style={{ marginTop: '10rem' }}
+          type='text'
+          className='form_input'
+          onChange={searchHandler}
+        />
+        <label htmlFor='searchHero' className='form_label'>
+          Search for a user
+        </label>
+      </div>
       <UsersListStyles>
         {dataCopy &&
           filterUsers(dataCopy).map((user, index) => {
@@ -60,6 +66,53 @@ const WrapperStyles = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .form {
+    position: relative;
+    width: 100%;
+    height: 3rem;
+
+    .form_input {
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.3) 70%
+      );
+      border: 2px solid black;
+
+      &:focus {
+        border: 2px solid red;
+
+        transition: all 250ms ease-in-out;
+      }
+
+      border-radius: 0.5rem;
+
+      font-family: inherit;
+      font-size: inherit;
+      color: white;
+      outline: none;
+      padding: 1.25rem;
+    }
+
+    .form_label {
+      position: absolute;
+      left: 1rem;
+      font-size: 1rem;
+      top: 0.8rem;
+      padding: 0 0.5rem;
+      color: white;
+      cursor: text;
+      transition: all 250ms ease-in-out;
+    }
+  }
+  .form_input:focus ~ .form_label,
+  .form_input:not(:placeholder-shown).form_input:not(:focus) ~ .form_label {
+    top: 1.3rem;
+    font-size: 0.8rem;
+    left: 0rem;
+    padding: 0 0.25rem;
+  }
 `;
 
 const UsersListStyles = styled.div`

@@ -1,14 +1,10 @@
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import styled from 'styled-components';
 
 const User = ({ children, mapKey }) => {
   return (
     <UserStyles key={mapKey}>
-      <img
-        src='https://pixsector.com/cache/50fcb576/av0cc3f7b41cb8510e35c.png'
-        alt=''
-      />
-
       <h5>{children}</h5>
     </UserStyles>
   );
@@ -18,7 +14,7 @@ const UserStyles = styled.div`
   width: 10rem;
   height: 15rem;
   cursor: pointer;
-  /* background-blend-mode: multiply; */
+
   box-shadow: 0.3rem 0.3rem 15px #131313;
   padding: 1rem;
   display: flex;
@@ -53,8 +49,8 @@ const UserStyles = styled.div`
   }
 
   img {
-    width: 5rem;
-    height: 5rem;
+    min-width: 5rem;
+    min-height: 5rem;
   }
 `;
 
