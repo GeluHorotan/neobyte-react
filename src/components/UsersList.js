@@ -64,7 +64,7 @@ const WrapperStyles = styled.section`
 
 const UsersListStyles = styled.div`
   width: 100%;
-  background: red;
+  border: 1px solid darkcyan;
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;

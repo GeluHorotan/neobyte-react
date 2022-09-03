@@ -4,7 +4,12 @@ import styled from 'styled-components';
 const User = ({ children, mapKey }) => {
   return (
     <UserStyles key={mapKey}>
-      <h4>{children}</h4>
+      <img
+        src='https://pixsector.com/cache/50fcb576/av0cc3f7b41cb8510e35c.png'
+        alt=''
+      />
+
+      <h5>{children}</h5>
     </UserStyles>
   );
 };
@@ -12,22 +17,44 @@ const User = ({ children, mapKey }) => {
 const UserStyles = styled.div`
   width: 10rem;
   height: 15rem;
-  background: linear-gradient(to bottom, #323232 0%, #3f3f3f 40%, #1c1c1c 150%),
-    linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(0, 0, 0, 0.25) 200%
-    );
-  background-blend-mode: multiply;
+  cursor: pointer;
+  /* background-blend-mode: multiply; */
   box-shadow: 0.3rem 0.3rem 15px #131313;
   padding: 1rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  h4 {
-    text-align: start;
+  border-radius: 10%;
+  position: relative;
+  overflow: hidden;
+  transition: all 200ms ease-in-out;
+  &:nth-child(odd) {
+    background: linear-gradient(
+      90deg,
+      rgba(66, 66, 66, 0.38) 3.07%,
+      rgba(18, 83, 139, 0.3) 88.06%
+    );
+  }
+  &:nth-child(even) {
+    background: linear-gradient(
+      90deg,
+      rgba(66, 66, 66, 0.38) 3.07%,
+      rgba(18, 83, 139, 0.4) 78.06%
+    );
+  }
+  &:hover {
+    transform: scale(1.1);
+    background: linear-gradient(
+      90deg,
+      rgba(78, 78, 78, 0.48) 3.07%,
+      rgba(21, 92, 155, 0.5) 78.06%
+    );
+  }
 
-    text-align-last: end;
+  img {
+    width: 5rem;
+    height: 5rem;
   }
 `;
 
