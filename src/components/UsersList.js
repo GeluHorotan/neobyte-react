@@ -7,8 +7,11 @@ import User from './User';
 const UsersList = () => {
   const [data, setData] = useState();
   const [dataCopy, setDataCopy] = useState();
+  const [dataLength, setDataLength] = useState();
   const [searchParams, setSearchParam] = useSearchParams();
+
   const searchTerm = searchParams.get('name') || '';
+
   const fetchUsers = async () => {
     const res = await fetch(`/.netlify/functions/getUsers/`);
     const json = await res.json();
@@ -31,25 +34,27 @@ const UsersList = () => {
   };
 
   const filterUsers = (dataSet) => {
+    // O(1) Space Complexity and O(n) Time Complexity
     const filteredData = dataSet.filter((user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    console.log(filteredData);
     return filteredData;
   };
+
+  console.log(dataLength);
   return (
     <WrapperStyles>
-      <div className='form'>
+      <FormStyles>
         <input
-          style={{ marginTop: '10rem' }}
           type='text'
           className='form_input'
+          placeholder=' '
           onChange={searchHandler}
         />
-        <label htmlFor='searchHero' className='form_label'>
-          Search for a user
-        </label>
-      </div>
+        <label className='form_label'>Search for a user</label>
+      </FormStyles>
       <UsersListStyles>
         {dataCopy &&
           filterUsers(dataCopy).map((user, index) => {
@@ -65,66 +70,68 @@ const WrapperStyles = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+`;
 
-  .form {
-    position: relative;
-    width: 100%;
+const FormStyles = styled.div`
+  position: relative;
+  margin-top: 25vh;
+  
+  .form_input {
     height: 3rem;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.3) 70%
+    );
+    border: 2px solid #26427a;
 
-    .form_input {
-      background: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0.5),
-        rgba(0, 0, 0, 0.3) 70%
-      );
-      border: 2px solid black;
-
-      &:focus {
-        border: 2px solid red;
-
-        transition: all 250ms ease-in-out;
-      }
-
-      border-radius: 0.5rem;
-
-      font-family: inherit;
-      font-size: inherit;
-      color: white;
-      outline: none;
-      padding: 1.25rem;
-    }
-
-    .form_label {
-      position: absolute;
-      left: 1rem;
-      font-size: 1rem;
-      top: 0.8rem;
-      padding: 0 0.5rem;
-      color: white;
-      cursor: text;
+    &:focus {
+     border: ${(dataLength) =>
+       dataLength === 0 ? '2px solid red;' : '2px solid green;'}
       transition: all 250ms ease-in-out;
     }
+
+    border-radius: 5rem;
+    font-family: inherit;
+    font-size: inherit;
+    color: white;
+    outline: none;
+    padding: 1.25rem;
   }
+
+  .form_label {
+    position: absolute;
+    left: 1rem;
+    top: 0.9rem;
+    pointer-events: none;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    color: white;
+    cursor: text;
+    transition: all 250ms ease-in-out;
+  }
+
   .form_input:focus ~ .form_label,
   .form_input:not(:placeholder-shown).form_input:not(:focus) ~ .form_label {
-    top: 1.3rem;
+    top: -0.5rem;
     font-size: 0.8rem;
-    left: 0rem;
+    left: 0.5rem;
     padding: 0 0.25rem;
+    background: #1b1c1e;
   }
 `;
 
 const UsersListStyles = styled.div`
   width: 100%;
-  border: 1px solid darkcyan;
+
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  padding: 2rem;
+  padding: 2rem 0;
 `;
 
 export default UsersList;

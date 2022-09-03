@@ -25,6 +25,12 @@ const UserStyles = styled.div`
   position: relative;
   overflow: hidden;
   transition: all 200ms ease-in-out;
+  h5 {
+    overflow: hidden;
+
+    max-width: 7rem;
+    text-overflow: ellipsis;
+  }
   &:nth-child(odd) {
     background: linear-gradient(
       90deg,
@@ -46,11 +52,6 @@ const UserStyles = styled.div`
       rgba(78, 78, 78, 0.48) 3.07%,
       rgba(21, 92, 155, 0.5) 78.06%
     );
-  }
-
-  img {
-    min-width: 5rem;
-    min-height: 5rem;
   }
 `;
 

@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import SearchIllustration from '../components/SearchIllustration';
 import UsersList from '../components/UsersList';
 
 const Homepage = () => {
   return (
     <HomepageStyles>
-      <UsersList></UsersList>
+      <SearchIllustration />
+      <UsersList />
     </HomepageStyles>
   );
 };

@@ -34,7 +34,7 @@ const MicroHeader = () => {
 
 const MicroHeaderStyles = styled.section`
   width: 100%;
-  position: fixed;
+
   padding: 2rem;
   background-color: #131338;
   display: flex;
