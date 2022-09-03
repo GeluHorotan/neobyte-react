@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 const UsersList = () => {
   const [data, setData] = useState();
   const [dataCopy, setDataCopy] = useState();
-  const [dataLength, setDataLength] = useState();
+
   const [searchParams, setSearchParam] = useSearchParams();
 
   const searchTerm = searchParams.get('name') || '';
@@ -41,11 +41,9 @@ const UsersList = () => {
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    console.log(filteredData);
     return filteredData;
   };
 
-  console.log(dataLength);
   return (
     <WrapperStyles>
       <FilterStyles>
@@ -94,6 +92,8 @@ const FilterStyles = styled.section`
 const FormStyles = styled.div`
   position: relative;
   width: 50%;
+
+  
   
   .form_input {
     width: 100%;
