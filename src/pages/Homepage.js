@@ -57,8 +57,8 @@ const Homepage = () => {
 
 const HomepageStyles = styled.div`
   width: 100%;
-  background: rgb(24, 24, 24);
-  height: 100vh;
+  background: url('https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//blog/bg_repeater.jpg');
+  padding: 0 14vw;
 `;
 
 const HeaderStyles = styled.section`
