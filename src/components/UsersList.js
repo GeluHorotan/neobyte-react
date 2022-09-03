@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import SearchIllustration from './SearchIllustration';
 import User from './User';
+import { motion } from 'framer-motion';
 
 const UsersList = () => {
   const [data, setData] = useState();
@@ -46,15 +48,18 @@ const UsersList = () => {
   console.log(dataLength);
   return (
     <WrapperStyles>
-      <FormStyles>
-        <input
-          type='text'
-          className='form_input'
-          placeholder=' '
-          onChange={searchHandler}
-        />
-        <label className='form_label'>Search for a user</label>
-      </FormStyles>
+      <FilterStyles>
+        <SearchIllustration />
+        <FormStyles>
+          <input
+            type='text'
+            className='form_input'
+            placeholder=' '
+            onChange={searchHandler}
+          />
+          <label className='form_label'>Search for a user</label>
+        </FormStyles>
+      </FilterStyles>
       <UsersListStyles>
         {dataCopy &&
           filterUsers(dataCopy).map((user, index) => {
@@ -73,11 +78,25 @@ const WrapperStyles = styled.section`
   align-items: flex-end;
 `;
 
+const FilterStyles = styled.section`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25vh;
+  svg {
+    width: 15rem;
+    height: 15rem;
+  }
+`;
+
 const FormStyles = styled.div`
   position: relative;
-  margin-top: 25vh;
+  width: 50%;
   
   .form_input {
+    width: 100%;
     height: 3rem;
     background: linear-gradient(
       to right,

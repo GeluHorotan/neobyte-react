@@ -6,7 +6,6 @@ import UsersList from '../components/UsersList';
 const Homepage = () => {
   return (
     <HomepageStyles>
-      <SearchIllustration />
       <UsersList />
     </HomepageStyles>
   );
