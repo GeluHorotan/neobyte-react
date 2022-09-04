@@ -28,6 +28,10 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    filterUsers();
+  }, [searchTerm]);
+
   const searchHandler = (event) => {
     const name = event.target.value;
     if (name) {
@@ -37,13 +41,12 @@ const UsersList = () => {
     }
   };
 
-  const filterUsers = (dataSet) => {
+  const filterUsers = () => {
     // O(1) Space Complexity and O(n) Time Complexity
-    const filteredData = dataSet.filter((user) =>
+    const filteredData = data?.filter((user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    return filteredData;
+    setDataCopy((prevState) => filteredData);
   };
 
   return (
@@ -58,7 +61,7 @@ const UsersList = () => {
             onChange={searchHandler}
             style={{
               border: `${
-                dataCopy && filterUsers(dataCopy).length === 0
+                dataCopy && dataCopy.length === 0
                   ? `2px solid ${vRed}`
                   : `2px solid ${vGreen}`
               } `,
@@ -68,8 +71,8 @@ const UsersList = () => {
         </FormStyles>
       </FilterStyles>
       <LoaderContainerStyles>
-        {(!data || !dataCopy) && <GridLoader size={30} color={'orange'} />}
-        {dataCopy && filterUsers(dataCopy).length === 0 ? (
+        {!data && <GridLoader size={30} color={'orange'} />}
+        {dataCopy && dataCopy.length === 0 ? (
           <h3>No user matched your search! Try again.</h3>
         ) : (
           ''
@@ -77,7 +80,7 @@ const UsersList = () => {
       </LoaderContainerStyles>
       <UsersListStyles>
         {dataCopy &&
-          filterUsers(dataCopy).map((user, index) => {
+          dataCopy.map((user, index) => {
             return <User mapKey={index}>{user.name}</User>;
           })}
       </UsersListStyles>

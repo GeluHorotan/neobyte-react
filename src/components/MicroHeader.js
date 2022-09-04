@@ -21,7 +21,7 @@ const MicroHeaderStyles = styled.section`
   width: 100%;
   padding: 2rem;
   display: flex;
-  position: fixed;
+  position: absolute;
   background: transparent;
   justify-content: center;
   align-items: center;
