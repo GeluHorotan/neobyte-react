@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import SearchIllustration from './SearchIllustration';
 import User from './User';
 import { motion } from 'framer-motion';
+import { GridLoader } from 'react-spinners';
+import { vOrange, vRed, vGreen } from '../Utility/Colors';
 
 const UsersList = () => {
   const [data, setData] = useState();
@@ -65,17 +67,19 @@ const UsersList = () => {
           <label className='form_label'>Search for a user</label>
         </FormStyles>
       </FilterStyles>
+      <LoaderContainerStyles>
+        {(!data || !dataCopy) && <GridLoader size={30} color={'orange'} />}
+        {dataCopy && filterUsers(dataCopy).length === 0 ? (
+          <h3>No user matched your search! Try again.</h3>
+        ) : (
+          ''
+        )}
+      </LoaderContainerStyles>
       <UsersListStyles>
         {dataCopy &&
           filterUsers(dataCopy).map((user, index) => {
             return <User mapKey={index}>{user.name}</User>;
           })}
-
-        {dataCopy && filterUsers(dataCopy).length === 0 ? (
-          <h3>No user matched your search!</h3>
-        ) : (
-          ''
-        )}
       </UsersListStyles>
     </WrapperStyles>
   );
@@ -88,7 +92,12 @@ const WrapperStyles = styled.section`
   justify-content: center;
   align-items: flex-end;
 `;
-
+const LoaderContainerStyles = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const FilterStyles = styled.section`
   width: 100%;
 
