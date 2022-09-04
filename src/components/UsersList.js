@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchIllustration from './SearchIllustration';
 import User from './User';
 import { motion } from 'framer-motion';
 import { GridLoader } from 'react-spinners';
-import { vOrange, vRed, vGreen } from '../Utility/Colors';
+import { vRed, vGreen, vOrange } from '../Utility/Colors';
 import { fadeUp, fadeLeft } from '../Utility/animation';
+import { AnimatePresence } from 'framer-motion';
 
 const UsersList = () => {
   const [data, setData] = useState();
   const [dataCopy, setDataCopy] = useState();
-
+  const [dataLength, setDataLength] = useState();
   const [searchParams, setSearchParam] = useSearchParams();
 
   const searchTerm = searchParams.get('name') || '';
@@ -22,6 +22,7 @@ const UsersList = () => {
     const json = await res.json();
 
     setData(() => json);
+
     setDataCopy(() => json);
   };
 
@@ -30,7 +31,9 @@ const UsersList = () => {
   }, []);
 
   useEffect(() => {
-    filterUsers();
+    if (dataCopy) {
+      setDataLength((prevState) => filterUsers(dataCopy).length);
+    }
   }, [searchTerm]);
 
   const searchHandler = (event) => {
@@ -42,12 +45,14 @@ const UsersList = () => {
     }
   };
 
-  const filterUsers = () => {
+  const filterUsers = (dataSet) => {
     // O(1) Space Complexity and O(n) Time Complexity
-    const filteredData = data?.filter((user) =>
+
+    const filteredData = dataSet?.filter((user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setDataCopy((prevState) => filteredData);
+
+    return filteredData;
   };
 
   return (
@@ -60,31 +65,46 @@ const UsersList = () => {
             className='form_input'
             placeholder=' '
             onChange={searchHandler}
-            style={{
-              border: `${
-                dataCopy && dataCopy.length === 0
-                  ? `2px solid ${vRed}`
-                  : `2px solid ${vGreen}`
-              } `,
-            }}
+            dataLength={dataLength}
           />
           <label className='form_label'>Search for a user</label>
         </FormStyles>
       </FilterStyles>
+
       <LoaderContainerStyles>
         {!data && <GridLoader size={30} color={'orange'} />}
-        {dataCopy && dataCopy.length === 0 ? (
+        {dataLength === 0 && (
           <motion.h3 variants={fadeUp} initial='hidden' animate='show'>
             No user matched your search! Try again.
           </motion.h3>
-        ) : (
-          ''
         )}
       </LoaderContainerStyles>
       <UsersListStyles variants={fadeUp} initial='hidden' animate='show'>
         {dataCopy &&
-          dataCopy.map((user, index) => {
-            return <User mapKey={index}>{user.name}</User>;
+          filterUsers(dataCopy).map((user, index) => {
+            return (
+              <motion.div
+                layout
+                initial={{
+                  x: -50,
+                }}
+                animate={{ x: 0 }}
+                transition={{
+                  type: 'spring',
+
+                  stifness: 300,
+
+                  duration: 1,
+                }}
+                exit={{
+                  x: -50,
+                }}
+              >
+                <AnimatePresence>
+                  <User mapKey={index}>{user.name}</User>
+                </AnimatePresence>
+              </motion.div>
+            );
           })}
       </UsersListStyles>
     </WrapperStyles>
@@ -131,13 +151,16 @@ const FormStyles = styled.div`
     );
 
     transition: all 250ms ease-in-out;
-
+    border: 2px solid ${vOrange};
     border-radius: 5rem;
     font-family: inherit;
     font-size: inherit;
     color: white;
     outline: none;
     padding: 1.25rem;
+    &:focus {
+      border: 2px solid ${vGreen};
+    }
   }
 
   .form_label {
