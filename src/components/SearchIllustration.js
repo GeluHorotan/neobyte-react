@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { slidingRight, zooming } from '../Utility/animation';
 
 const SearchIllustration = () => {
+  // SVG ILLUSTRATION
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

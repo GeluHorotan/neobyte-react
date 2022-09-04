@@ -1,3 +1,5 @@
+// Different types of animation that we can reuse.
+
 export const slidingRight = {
   hidden: {
     x: '-100%',

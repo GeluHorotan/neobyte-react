@@ -2,9 +2,10 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import styled from 'styled-components';
 
-const User = ({ children, mapKey }) => {
+const User = ({ children }) => {
+  // Component that renders the user name.
   return (
-    <UserStyles key={mapKey}>
+    <UserStyles>
       <h5>{children}</h5>
     </UserStyles>
   );

@@ -1,43 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+
+// Components
 import SearchIllustration from './SearchIllustration';
 import User from './User';
-import { motion } from 'framer-motion';
 import { GridLoader } from 'react-spinners';
-import { vRed, vGreen, vOrange } from '../Utility/Colors';
+
+// Colors
+import { vGreen, vOrange } from '../Utility/Colors';
+
+// Animation
+import { motion } from 'framer-motion';
 import { fadeUp, fadeLeft } from '../Utility/animation';
 import { AnimatePresence } from 'framer-motion';
 
 const UsersList = () => {
+  // Here, I've created the states I need for this component and I've also used useSearchParams hook to get the parameter from the URL or to place it there, depends of the situation.
   const [data, setData] = useState();
-  const [dataCopy, setDataCopy] = useState();
-  const [dataLength, setDataLength] = useState();
   const [searchParams, setSearchParam] = useSearchParams();
 
+  // Here I stored the search term in a variable by accessing the hook useSearchParam (in case the useSearchParam does't exist, we're gonna leave an empty string)
+  //
   const searchTerm = searchParams.get('name') || '';
 
   const fetchUsers = async () => {
+    // Async function that fetches the list of users by calling the node JS serverless function we created.
     const res = await fetch(`/.netlify/functions/getUsers/`);
     const json = await res.json();
-
-    setData(() => json);
-
-    setDataCopy(() => json);
+    // After getting the JSON, we stored the JSON in a state that we're gonna work with.
+    setData(() => json); // O(1) Space Complexity
   };
 
   useEffect(() => {
+    // We call the fetchUsers function in useEffect with an empty array which indicates we want this function to be called once when our page loads.
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    if (dataCopy) {
-      setDataLength((prevState) => filterUsers(dataCopy).length);
-    }
-  }, [searchTerm]);
-
   const searchHandler = (event) => {
-    const name = event.target.value;
+    // This is a function binded on an event, which handles the search operation.
+    const name = event.target.value; // O(1) Space Complexity - O(1) Time Complexity
+    // We create a variable that holds the input of the search, and if the input exists, we're gonna set the search param to the input, if not, we're gonna set it to an empty object.
+    // This function runs everytime it detects a change in our input because it's binded to the onChange event.
     if (name) {
       setSearchParam({ name });
     } else {
@@ -47,11 +51,10 @@ const UsersList = () => {
 
   const filterUsers = (dataSet) => {
     // O(1) Space Complexity and O(n) Time Complexity
-
+    // This function gets as parameter an array and it filters elements based on a function we specify, in our case it's includes function. We also had to convert both, the name of the user to lower case, as well as our searchTerm, in case the user introduces an upper case search term for example. This way we avoid bugs.
     const filteredData = dataSet?.filter((user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
     return filteredData;
   };
 
@@ -65,25 +68,31 @@ const UsersList = () => {
             className='form_input'
             placeholder=' '
             onChange={searchHandler}
-            dataLength={dataLength}
           />
           <label className='form_label'>Search for a user</label>
         </FormStyles>
       </FilterStyles>
-      {dataLength && dataLength}
+
       <LoaderContainerStyles>
+        {/* Checking if data exists, if not, I am gonna render a spinning loader */}
         {!data && <GridLoader size={30} color={'orange'} />}
-        {dataLength === 0 && (
+        {/* Checking the length of the filtered data and if it's gonna be 0, I am gonna render an error */}
+        {filterUsers(data)?.length === 0 && (
           <motion.h3 variants={fadeUp} initial='hidden' animate='show'>
             No user matched your search! Try again.
           </motion.h3>
         )}
       </LoaderContainerStyles>
       <UsersListStyles variants={fadeUp} initial='hidden' animate='show'>
-        {dataCopy &&
-          filterUsers(dataCopy).map((user, index) => {
+        {/* Checking if data exists, and after data came back from our node JS function, I am gonna use a map function for displaying the data */}
+        {/* I've also added a nice layout animation which can be improved in terms of visual aspect */}
+        {data &&
+          filterUsers(data).map((user, index) => {
+            // I've decided to add the index of our element as a key, I know this is bad practice because if an element gets removed from the array, all the elements would re-render because of the index shifting.
+            // I didn't have any option to go for in this case because in my data set I didn't have an ID of the user.
             return (
               <motion.div
+                key={index}
                 layout
                 initial={{
                   x: -50,
@@ -101,7 +110,7 @@ const UsersList = () => {
                 }}
               >
                 <AnimatePresence>
-                  <User mapKey={index}>{user.name}</User>
+                  <User>{user.name}</User>
                 </AnimatePresence>
               </motion.div>
             );

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-
+// Components
 import UsersList from '../components/UsersList';
 
 const Homepage = () => {
+  // Homepage that renders the UsersList component which includes the grid with all the users that come back from the API.
   return (
     <HomepageStyles>
       <UsersList />

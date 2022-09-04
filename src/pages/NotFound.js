@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+// Components
 import NotFoundIllustration from '../components/NotFoundIllustration';
+
+// Colors
 import { vOrange } from '../Utility/Colors';
+
+// Animation
 import { motion } from 'framer-motion';
 import { fadeUp } from '../Utility/animation';
 
 const NotFound = () => {
+  // Page that shows up when the route we wanted to go on, doesn't exist.
   return (
     <ContainerStyles>
       <ElementsContainer variants={fadeUp} initial='hidden' animate='show'>
