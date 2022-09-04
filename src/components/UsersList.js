@@ -59,8 +59,8 @@ const UsersList = () => {
             style={{
               border: `${
                 dataCopy && filterUsers(dataCopy).length === 0
-                  ? '2px solid red'
-                  : '2px solid green'
+                  ? `2px solid ${vRed}`
+                  : `2px solid ${vGreen}`
               } `,
             }}
           />
