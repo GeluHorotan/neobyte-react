@@ -70,7 +70,7 @@ const UsersList = () => {
           <label className='form_label'>Search for a user</label>
         </FormStyles>
       </FilterStyles>
-
+      {dataLength && dataLength}
       <LoaderContainerStyles>
         {!data && <GridLoader size={30} color={'orange'} />}
         {dataLength === 0 && (
