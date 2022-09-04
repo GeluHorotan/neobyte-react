@@ -7,6 +7,7 @@ import User from './User';
 import { motion } from 'framer-motion';
 import { GridLoader } from 'react-spinners';
 import { vOrange, vRed, vGreen } from '../Utility/Colors';
+import { fadeUp, fadeLeft } from '../Utility/animation';
 
 const UsersList = () => {
   const [data, setData] = useState();
@@ -51,7 +52,7 @@ const UsersList = () => {
 
   return (
     <WrapperStyles>
-      <FilterStyles>
+      <FilterStyles variants={fadeLeft} initial='hidden' animate='show'>
         <SearchIllustration />
         <FormStyles>
           <input
@@ -73,12 +74,14 @@ const UsersList = () => {
       <LoaderContainerStyles>
         {!data && <GridLoader size={30} color={'orange'} />}
         {dataCopy && dataCopy.length === 0 ? (
-          <h3>No user matched your search! Try again.</h3>
+          <motion.h3 variants={fadeUp} initial='hidden' animate='show'>
+            No user matched your search! Try again.
+          </motion.h3>
         ) : (
           ''
         )}
       </LoaderContainerStyles>
-      <UsersListStyles>
+      <UsersListStyles variants={fadeUp} initial='hidden' animate='show'>
         {dataCopy &&
           dataCopy.map((user, index) => {
             return <User mapKey={index}>{user.name}</User>;
@@ -88,7 +91,7 @@ const UsersList = () => {
   );
 };
 
-const WrapperStyles = styled.section`
+const WrapperStyles = styled(motion.section)`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -101,7 +104,7 @@ const LoaderContainerStyles = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const FilterStyles = styled.section`
+const FilterStyles = styled(motion.section)`
   width: 100%;
 
   display: flex;
@@ -159,7 +162,7 @@ const FormStyles = styled.div`
   }
 `;
 
-const UsersListStyles = styled.div`
+const UsersListStyles = styled(motion.div)`
   width: 100%;
 
   display: flex;
