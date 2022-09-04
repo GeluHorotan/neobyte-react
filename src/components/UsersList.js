@@ -54,6 +54,13 @@ const UsersList = () => {
             className='form_input'
             placeholder=' '
             onChange={searchHandler}
+            style={{
+              border: `${
+                dataCopy && filterUsers(dataCopy).length === 0
+                  ? '2px solid red'
+                  : '2px solid green'
+              } `,
+            }}
           />
           <label className='form_label'>Search for a user</label>
         </FormStyles>
@@ -63,6 +70,12 @@ const UsersList = () => {
           filterUsers(dataCopy).map((user, index) => {
             return <User mapKey={index}>{user.name}</User>;
           })}
+
+        {dataCopy && filterUsers(dataCopy).length === 0 ? (
+          <h3>No user matched your search!</h3>
+        ) : (
+          ''
+        )}
       </UsersListStyles>
     </WrapperStyles>
   );
@@ -93,8 +106,6 @@ const FormStyles = styled.div`
   position: relative;
   width: 50%;
 
-  
-  
   .form_input {
     width: 100%;
     height: 3rem;
@@ -103,13 +114,8 @@ const FormStyles = styled.div`
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.3) 70%
     );
-    border: 2px solid #26427a;
 
-    &:focus {
-     border: ${(dataLength) =>
-       dataLength === 0 ? '2px solid red;' : '2px solid green;'}
-      transition: all 250ms ease-in-out;
-    }
+    transition: all 250ms ease-in-out;
 
     border-radius: 5rem;
     font-family: inherit;
